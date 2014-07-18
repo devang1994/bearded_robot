@@ -1,7 +1,8 @@
 #include "DHT.h" //uses the DHT libarary from Adafruit
 
 #define DHTPIN 2     // what pin we're connected to
-#define TEMPIN 13
+#define HPIN 13
+#define CPIN 12
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
 
 // Connect pin 1 (on the left) of the sensor to +5V
@@ -15,7 +16,8 @@ void setup() {
   
   Serial.begin(9600); 
   Serial.println("Incubator Beta");
-  pinMode(TEMPIN,OUTPUT);
+  pinMode(HPIN,OUTPUT);
+  pinMode(CPIN,OUTPUT);
   dht.begin(); //initializies the sensor
   
 }
@@ -38,7 +40,27 @@ void loop() {
     return;
   }
   
-  digitalWrite(TEMPIN,HIGH);
-
-
+  Serial.print("Temperature: "); 
+  Serial.print(t);
+  Serial.println(" *C ");
+  
+  int b1=Serial.parseInt();
+  if (Serial.read() == '\n') 
+  {
+    if(b1==1)
+    {
+      digitalWrite(HPIN, HIGH);
+      digitalWrite(CPIN, LOW);
+    }
+    if(b1==2)
+    {
+      digitalWrite(HPIN, LOW);
+      digitalWrite(CPIN, HIGH);
+    }
+    if(b1==0)
+    {
+      digitalWrite(HPIN, LOW);
+      digitalWrite(CPIN, LOW);
+    }     
+  }
 }
