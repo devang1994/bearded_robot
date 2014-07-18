@@ -1,11 +1,8 @@
 #include "DHT.h" //uses the DHT libarary from Adafruit
 
 #define DHTPIN 2     // what pin we're connected to
-
-// Uncomment whatever type you're using!
-//#define DHTTYPE DHT11   // DHT 11 
+#define TEMPIN 13
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
-//#define DHTTYPE DHT21   // DHT 21 (AM2301)
 
 // Connect pin 1 (on the left) of the sensor to +5V
 // Connect pin 2 of the sensor to whatever your DHTPIN is
@@ -15,10 +12,12 @@
 DHT dht(DHTPIN, DHTTYPE);
 
 void setup() {
+  
   Serial.begin(9600); 
-  Serial.println("DHTxx test!");
- 
-  dht.begin();
+  Serial.println("Incubator Beta");
+  pinMode(TEMPIN,OUTPUT);
+  dht.begin(); //initializies the sensor
+  
 }
 
 void loop() {
@@ -38,20 +37,8 @@ void loop() {
     Serial.println("Failed to read from DHT sensor!");
     return;
   }
+  
+  digitalWrite(TEMPIN,HIGH);
 
-  // Compute heat index
-  // Must send in temp in Fahrenheit!
-  float hi = dht.computeHeatIndex(f, h);
 
-  Serial.print("Humidity: "); 
-  Serial.print(h);
-  Serial.print(" %\t");
-  Serial.print("Temperature: "); 
-  Serial.print(t);
-  Serial.print(" *C ");
-  Serial.print(f);
-  Serial.print(" *F\t");
-  Serial.print("Heat index: ");
-  Serial.print(hi);
-  Serial.println(" *F");
 }
