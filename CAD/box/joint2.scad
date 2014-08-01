@@ -10,10 +10,12 @@ module bracket(height,sheet_width)
 		union()
 		{
 			translate([5+sheet_width,5+sheet_width,-1]) cube([40,40,height+10]);
+			//gives the basic angle bracket shape
+				
 			translate([sheet_width+0.5,sheet_width+0.5,3]) cube ([sheet_width+0.5,40,height]);
 			translate([sheet_width+0.5,sheet_width+0.5,3]) cube ([40,sheet_width+0.5,height]);
 		}
 	}
 }
 
-bracket(30,2);
+bracket(30,3);
