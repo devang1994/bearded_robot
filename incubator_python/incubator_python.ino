@@ -40,6 +40,10 @@ void loop()
     if(instruction==2)
     {
       set_temp=Serial.parseInt();
+      Serial.println("done");
+    }
+
+        
     }
   }
 
