@@ -11,8 +11,7 @@ DHT dht(DHTPIN, DHTTYPE);
 if number is 2 it sets the desired temperature ,
 by taking another input in the same line*/
 
-
-
+float t;
 float set_temp=28;
 void setup()
 {
@@ -20,10 +19,12 @@ void setup()
   pinMode(hPin,OUTPUT);
   pinMode(cPin,OUTPUT);
   dht.begin();
+
 }
 
 void loop()
 {
+  
   if (Serial.available() > 0) 
   {
 
@@ -32,7 +33,7 @@ void loop()
     
     if(instruction==1)
     {
-      float t = dht.readTemperature();
+      t = dht.readTemperature();
       Serial.println(t);
     }
 
@@ -45,25 +46,21 @@ void loop()
 
   if(t<(set_temp-MARGIN))
   {
-    Serial.println("heating");
+    //Serial.println("heating");
     digitalWrite(hPin, HIGH);
     digitalWrite(cPin, LOW);
   }
   if(t>(set_temp+MARGIN))
   {
-    Serial.println("Cooling");      
+    //Serial.println("Cooling");      
     digitalWrite(hPin, HIGH);
     digitalWrite(cPin, LOW);
   }
   if((t<(set_temp+MARGIN))&&(t>(set_temp-MARGIN)))
   {
-    Serial.println("going for a nap");
+    //Serial.println("going for a nap");
     digitalWrite(hPin, LOW);
     digitalWrite(cPin, LOW);
   }
-
-
-  delay(500);
-  
 }
 
